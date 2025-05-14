@@ -9,7 +9,7 @@ class Vector{
     public:
     Vector() = default;
     ~Vector() { 
-        delete duomenys; 
+        delete[] duomenys; 
         dydis=0;
         talpa=0;
     }

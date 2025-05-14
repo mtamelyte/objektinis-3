@@ -11,7 +11,7 @@ Stud &Stud::operator=(const Stud &s)
         vardas = s.vardas;
         pavarde = s.pavarde;
         egzaminas = s.egzaminas;
-        nd = s.nd;
+        nd = s.nd; 
         galutinisSuVidurkiu = s.galutinisSuVidurkiu;
         galutinisSuMediana = s.galutinisSuMediana;
     }
