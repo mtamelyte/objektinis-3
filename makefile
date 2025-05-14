@@ -5,6 +5,10 @@ testai: funkcijos.o klase.o
 	g++ -O3 -o testai testai.cpp funkcijos.o klase.o
 	./testai.exe
 
+vektorius:
+	g++ -O3 -o vektorius vectorTestai.cpp
+	./vektorius.exe
+
 funkcijos: 
 	g++ funkcijos.cpp
 
@@ -15,4 +19,4 @@ run: main
 	./main.exe
 
 clean: 
-	del *.o main.exe testai.exe
+	del *.o *.exe

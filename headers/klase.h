@@ -1,4 +1,4 @@
-#include "mano_lib.h"
+#include "vektorius.h"
 double vidurkis(vector<int> nd);
 double mediana(vector<int> nd);
 class Zmogus
