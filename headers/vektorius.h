@@ -33,6 +33,18 @@ private:
 public:
     // konstruktoriai destruktoriai
     Vector() = default;
+
+    Vector(std::initializer_list<T> list) : talpa(list.size()), dydis(list.size()) {
+        duomenys = new T[talpa];
+        std::copy(list.begin(), list.end(), duomenys);
+    }
+
+    Vector& operator=( std::initializer_list<value_type> list ){
+        talpa=list.size();
+        duomenys = new T[talpa];
+        std::copy(list.begin(), list.end(), duomenys);
+    }
+
     ~Vector()
     {
         delete[] duomenys;
@@ -97,6 +109,16 @@ public:
         return *this;
     }
 
+    //grazinamos reiksmes
+
+    T* begin(){
+        return duomenys;
+    }
+
+    T* end(){
+        return duomenys+dydis;
+    }
+
     void push_back(const T &elementas)
     {
         if (dydis == talpa)
@@ -130,13 +152,26 @@ public:
     }
 
     void assign(size_t kiekis, const T& elementas){
-        if(kiekis>talpa) 
-        {
-            resize(kiekis); 
-            dydis=kiekis;
-        }
+        if(kiekis>talpa) resize(kiekis); 
         std::fill_n(duomenys, kiekis, elementas);
+        dydis=kiekis;
     }
+
+    void assign(T* begin, T* end)
+    {
+        size_t kiekis = std::distance(begin, end);
+        if(kiekis>talpa) resize(kiekis);
+        std::copy(begin, end, duomenys);
+        dydis=kiekis;
+    }
+
+    void assign(std::initializer_list<T> ilist) {
+        size_t kiekis = ilist.size();
+        if (kiekis > talpa) resize(kiekis);
+        std::copy(ilist.begin(), ilist.end(), duomenys);
+        dydis = kiekis;
+    }
+
 
     // operatoriu overloadai
     T &operator[](size_t index)

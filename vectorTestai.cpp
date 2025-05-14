@@ -20,8 +20,12 @@ int main(){
     antras.swap(vektorius3);
     cout << antras[0] << endl;
 
-   // antras.clear();
+    antras.clear();
 
-    antras.assign(2, 2);
+    antras.assign(4, 7);
     cout << antras[0] << antras[1] << antras[2] << endl;
+
+    antras.clear();
+    antras.assign(vektorius.begin(), vektorius.end());
+    cout << antras[0] << endl;
 }
