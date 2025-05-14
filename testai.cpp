@@ -46,7 +46,7 @@ TEST_CASE("Testuojamas ivedimo operatorius", "[Input][operator]"){
 TEST_CASE("Testuojamas isvedimo operatorius", "[Output][operator]"){
     ostringstream isvestis, isvestisTest;
     Stud studentas("Monika", "Tamelyte", 10, {8, 9, 10});
-    isvestisTest << setw(16) << "Monika" << setw(16) << "Tamelyte" << setw(20) << fixed << setprecision(2) << ((vidurkis({8, 9, 10}) * 0.4) + (10 * 0.6)) << endl;
+    isvestisTest << setw(16) << "Monika" << setw(16) << "Tamelyte" << setw(20) << fixed << setprecision(2) << ((vidurkis({8, 7, 10}) * 0.4) + (10 * 0.6)) << endl;
     isvestis << studentas;
     REQUIRE(isvestis.str()==isvestisTest.str());
 }
