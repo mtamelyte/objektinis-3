@@ -6,6 +6,8 @@ class Vector{
     size_t dydis = 0;
     size_t talpa =0;
 
+    void resize();
+
     public:
     Vector() = default;
     ~Vector() { 
@@ -19,4 +21,8 @@ class Vector{
 
     Vector(const Vector && v);
     Vector&operator=(const Vector && v);
+
+    void push_back(const T& elementas);
+    void pop_back();
+    T& operator[](size_t index);
 }
