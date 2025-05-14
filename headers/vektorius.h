@@ -109,14 +109,67 @@ public:
 
     // grazinamos reiksmes
 
-    T *begin()
+    T *begin() { return duomenys; }
+    const T *begin() const { return duomenys; }
+
+    T *end() { return duomenys + dydis; }
+    const T *end() const { return duomenys + dydis; }
+
+    T *rbegin()
+    {
+        if (dydis == 0)
+            return duomenys;
+        else
+            duomenys + dydis - 1;
+    }
+
+    T *rend()
+    {
+        if (dydis == 0)
+            return duomenys;
+        else
+            duomenys - 1;
+    }
+
+    const T *cbegin() const { return duomenys; }
+    const T *cend() const { return duomenys + dydis; }
+
+    T &front()
+    {
+        return this->at(0);
+    }
+
+    T &back()
+    {
+        return this->at(dydis - 1);
+    }
+
+    T *data()
     {
         return duomenys;
     }
 
-    T *end()
+    T *data() const
     {
-        return duomenys + dydis;
+        return duomenys;
+    }
+
+    size_t size()
+    {
+        return dydis;
+    }
+
+    size_t capacity()
+    {
+        return talpa;
+    }
+
+    bool empty() const
+    {
+        if (dydis == 0)
+            return true;
+        else
+            return false;
     }
 
     void push_back(const T &elementas)
@@ -169,12 +222,12 @@ public:
         dydis = kiekis;
     }
 
-    void assign(std::initializer_list<T> ilist)
+    void assign(std::initializer_list<T> list)
     {
-        size_t kiekis = ilist.size();
+        size_t kiekis = list.size();
         if (kiekis > talpa)
             resize(kiekis);
-        std::copy(ilist.begin(), ilist.end(), duomenys);
+        std::copy(list.begin(), list.end(), duomenys);
         dydis = kiekis;
     }
 
@@ -190,7 +243,7 @@ public:
         duomenys = naujiDuomenys;
     }
 
-    void resize(size_t naujaTalpa, const T& elementas)
+    void resize(size_t naujaTalpa, const T &elementas)
     {
         talpa = naujaTalpa;
         T *naujiDuomenys = new T[talpa];
@@ -202,7 +255,7 @@ public:
         {
             naujiDuomenys[i] = elementas;
         }
-        dydis=talpa;
+        dydis = talpa;
         delete[] duomenys;
         duomenys = naujiDuomenys;
     }
@@ -248,12 +301,34 @@ public:
         size_t vieta = index - duomenys;
         if (dydis == talpa)
             resize();
-        for (size_t i = dydis; i > vieta; i--)
+        for (size_t i = dydis; i > vieta + 1; i--)
         {
             duomenys[i] = duomenys[i - 1];
         }
         duomenys[vieta] = elementas;
         dydis++;
+    }
+
+
+    T &at(size_t index)
+    {
+        if (index >= dydis || index < 0)
+        {
+            throw std::out_of_range("Out of range: " + std::to_string(index) + " >= this->size: " + std::to_string(this->dydis));
+        }
+        return duomenys[index];
+    }
+
+    void append_range(std::initializer_list<T> list)
+    {
+        if (dydis + list.size() > talpa)
+        {
+            reserve(talpa + list.size());
+        }
+        for (auto &elementas : list)
+        {
+            duomenys[dydis++] = elementas;
+        }
     }
 
     // operatoriu overloadai
@@ -264,5 +339,14 @@ public:
             throw std::out_of_range("Index out of bounds");
         }
         return duomenys[index];
+    }
+
+    bool operator==(const Vector&v){
+        if(dydis != v.dydis) return false;
+        for(int i=0; i<dydis; i++)
+        {
+            if (duomenys[i]!= v.duomenys[i]) return false;
+        }
+        return true;
     }
 };
