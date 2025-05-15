@@ -1,4 +1,4 @@
-#include "mano_lib.h"
+
 #include "antrastesBeTemplates.h"
 
 template <typename Container>

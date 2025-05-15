@@ -22,6 +22,15 @@ Paleidus programą naudotojui parodomas meniu su 7 pasirinkimais:
 
 7 - Baigti darbą: Išjungia programą
 
+# v3.0
+
+# Vektorių testavimas
+
+|             | Greitis su 10000  | Greitis su 100000 | Greitis su 1000000 | Greitis su 10000000 | Greitis su 100000000 |
+|             |-------------------|-------------------|--------------------|---------------------|----------------------|
+| std::vector | 0.0001235 s       | 0.0007838 s       | 0.0048987 s        | 0.0530586 s         | 0.651127 s           |
+| Vector      | 0 s               | 0.0006101 s       | 0.0033752 s        | 0.0575333 s         | 0.606152 s           |
+
 # v2.0
 
 Prie programos pridėta Doxygen sugeneruota dokumentacija, išsamiai aprašanti visus programos komponentus. Taip pat implementuotas unit testing, testuojantis rule of five, taip pat get'erius ir set'erius.

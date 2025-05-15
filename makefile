@@ -9,6 +9,10 @@ vektorius:
 	g++ -O3 -o vektorius vectorTestai.cpp
 	./vektorius.exe
 
+perskirstymai:
+	g++ -O3 -o perskirstymai perskirstymuTestai.cpp
+	./perskirstymai.exe
+
 funkcijos: 
 	g++ funkcijos.cpp
 
