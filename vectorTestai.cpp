@@ -3,396 +3,170 @@
 #include "headers/vektorius.h"
 #include "catch2/catch.hpp"
 
-TEST_CASE()
+TEST_CASE("Konstruktorius", "[Constructor]")
+{
+    Vector<int> v1, v2;
+    REQUIRE(v1.data() == nullptr);
+    REQUIRE(v1 == v2);
+}
 
-/*
-    // konstruktoriai destruktoriai
-    Vector() = default;
+TEST_CASE("Konstruktorius su sarasu", "[List][constructor]")
+{
+    Vector<int> v1{1, 2, 3};
+    Vector<int> v2;
+    v2.push_back(1);
+    v2.push_back(2);
+    v2.push_back(3);
+    REQUIRE(v1 == v2);
+}
 
-    Vector(std::initializer_list<T> list) : talpa(list.size()), dydis(list.size())
-    {
-        duomenys = new T[talpa];
-        std::copy(list.begin(), list.end(), duomenys);
-    }
+TEST_CASE("Assignment su sarasu", "[List][assignment]")
+{
+    Vector<int> v1={1, 2, 3};
+    Vector<int> v2;
+    v2.push_back(1);
+    v2.push_back(2);
+    v2.push_back(3);
+    REQUIRE(v1 == v2);
+}
 
-    Vector &operator=(std::initializer_list<T> list)
-    {
-        talpa = list.size();
-        duomenys = new T[talpa];
-        std::copy(list.begin(), list.end(), duomenys);
-        dydis = talpa;
-        return *this;
-    }
+TEST_CASE("Copy constructor", "[Copy][constructor]")
+{
+    Vector <int> v1={1,2,3};
+    Vector <int> v2(v1);
+    REQUIRE(v1==v2);
+}
 
-    ~Vector()
-    {
-        delete[] duomenys;
-        dydis = 0;
-        talpa = 0;
-    }
+TEST_CASE("Copy assignment", "[Copy][assignment]")
+{
+    Vector <int> v1={1,2,3};
+    Vector <int> v2=v1;
+    REQUIRE(v1==v2);
+}
 
-    // copy constructor
-    Vector(const Vector &v) : dydis(v.dydis), talpa(v.talpa)
-    {
-        duomenys = new T[talpa];
-        for (size_t i = 0; i < dydis; i++)
-        {
-            duomenys[i] = v.duomenys[i];
-        }
-    }
+TEST_CASE("Move constructor", "[Move][constructor]"){
+    Vector <int> v1={1,2,3};
+    Vector <int> v2(std::move(v1));
+    REQUIRE_FALSE(v1==v2);
+    REQUIRE(v2==Vector <int>{1, 2, 3});
+}
 
-    // copy assignment operator
-    Vector &operator=(const Vector &v)
-    {
-        if (this != &v)
-        {
-            delete[] duomenys;
-            dydis = v.dydis;
-            talpa = v.talpa;
-            duomenys = new T[talpa];
-            for (size_t i = 0; i < dydis; i++)
-            {
-                duomenys[i] = v.duomenys[i];
-            }
-        }
-        return *this;
-    }
+TEST_CASE("Move assignment", "[Move][assignment]"){
+    Vector <int> v1={1,2,3};
+    Vector <int> v2 = std::move(v1);
+    REQUIRE_FALSE(v1==v2);
+    REQUIRE(v2==Vector <int>{1, 2, 3});
+}
 
-    // move constructor
-    Vector(Vector &&v) noexcept : duomenys(v.duomenys), talpa(v.talpa), dydis(v.dydis)
-    {
-        v.duomenys = nullptr;
-        v.talpa = 0;
-        v.dydis = 0;
-    }
+TEST_CASE("Grazinamos reiksmes", "[return]"){
+    Vector <int> v1{1, 2, 3};
+    REQUIRE(*v1.begin()==1);
+    REQUIRE(*(v1.end()-1)==3);
+    REQUIRE(v1.front()==1);
+    REQUIRE(v1.back()==3);
+    REQUIRE(v1.at(1)==2);
+}
 
-    // move assignment operator
-    Vector &operator=(const Vector &&v)
-    {
-        if (this != &v)
-        {
-            delete[] duomenys;
-            dydis = v.dydis;
-            talpa = v.talpa;
-            {
-                duomenys = new T[talpa];
-                for (size_t i = 0; i < dydis; i++)
-                {
-                    duomenys[i] = v.duomenys[i];
-                }
-            }
-        }
-        v.duomenys = nullptr;
-        v.talpa = 0;
-        v.dydis = 0;
-        return *this;
-    }
+TEST_CASE("Dydis ir talpa", "[capacity]"){
+    Vector <int> v1{1,2,3};
+    REQUIRE(v1.size()==3);
+    v1.reserve(20);
+    REQUIRE(v1.capacity()==20);
+    v1.shrink_to_fit();
+    REQUIRE(v1.capacity()==3);
+    REQUIRE(v1.size()==3);
+    v1.resize(4);
+    REQUIRE(v1.capacity()==4);
+    v1.resize(4,4);
+    REQUIRE(v1.size()==4);
+    REQUIRE(v1[3]==4);
+}
 
-    // grazinamos reiksmes
+TEST_CASE("Isvalymas"){
+    Vector <int> v1{1,2,3};
+    REQUIRE_FALSE(v1.empty());
+    v1.clear();
+    REQUIRE(v1.empty());
+}
 
-    T *begin() { return duomenys; }
-    const T *begin() const { return duomenys; }
+TEST_CASE("Naujas elementas", "[push][back]")
+{
+    Vector <int> v1;
+    v1.push_back(1);
+    v1.push_back(2);
+    v1.push_back(3);
+    REQUIRE(v1.at(0)==1);
+    REQUIRE(v1.at(1)==2);
+    REQUIRE(v1.at(2)==3);
+}
 
-    T *end() { return duomenys + dydis; }
-    const T *end() const { return duomenys + dydis; }
+TEST_CASE("Paskutinio elemento isemimas", "[pop][back]"){
+    Vector <int> v1{1,2,3};
+    REQUIRE(v1.size()==3);
+    v1.pop_back();
+    REQUIRE(v1.size()==2);
+}
 
-    T *rbegin()
-    {
-        if (dydis == 0)
-            return duomenys;
-        else
-            duomenys + dydis - 1;
-    }
+TEST_CASE("Vektoriu sukeitimas", "[swap]")
+{
+    Vector <int> v1{1,2,3};
+    Vector <int> v2{4,5};
+    v1.swap(v2);
+    REQUIRE(v1.size()==2);
+    REQUIRE(v2.size()==3);
+    REQUIRE(v1[0]==4);
+    REQUIRE(v1[1]==5);
+    REQUIRE(v2[0]==1);
+    REQUIRE(v2[1]==2);
+    REQUIRE(v2[2]==3);
+}
 
-    T *rend()
-    {
-        if (dydis == 0)
-            return duomenys;
-        else
-            duomenys - 1;
-    }
+TEST_CASE("Priskyrimas", "[assign]"){
+    Vector <char> v1;
+    v1.assign(5, 'a');
+    REQUIRE(v1[0]=='a');
+    REQUIRE(v1[4]=='a');
+    Vector <char> v2;
+    v2.assign(v1.begin(), v1.end());
+    REQUIRE(v1==v2);
+    REQUIRE(v2[0]=='a');
+    Vector <char> v3;
+    v3.assign({1,2,3});
+    REQUIRE(v3[0]==1);
+    REQUIRE(v3[1]==2);
+    REQUIRE(v3[2]==3);
+}
 
-    const T *cbegin() const { return duomenys; }
-    const T *cend() const { return duomenys + dydis; }
+TEST_CASE("Elementu pasalinimas", "[erase]")
+{
+    Vector <int> v1{1,2,3,4,5};
+    REQUIRE(v1[1]==2);
+    v1.erase(v1.begin()+1);
+    REQUIRE(v1[1]==3);
+    REQUIRE(v1.size()==4);
+    v1.erase(v1.begin()+1, v1.begin()+3);
+    REQUIRE(v1[1]==5);
+}
 
-    T &front()
-    {
-        return this->at(0);
-    }
+TEST_CASE("Elementu pridejimas", "[insert]"){
+    Vector <int> v1{1,2,3};
+    v1.insert(v1.begin()+1, 4);
+    REQUIRE(v1[1]==4);
+    REQUIRE(v1.size()==4);
+}
 
-    T &back()
-    {
-        return this->at(dydis - 1);
-    }
+TEST_CASE("Saraso prijungimas prie galo"){
+    Vector <int> v1{1,2,3};
+    v1.append_range({4,5});
+    REQUIRE(v1[3]==4);
+    REQUIRE(v1[4]==5);
+    REQUIRE(v1.size()==5);
+}
 
-    T *data()
-    {
-        return duomenys;
-    }
-
-    T *data() const
-    {
-        return duomenys;
-    }
-
-    size_t size()
-    {
-        return dydis;
-    }
-
-    size_t capacity()
-    {
-        return talpa;
-    }
-
-    bool empty() const
-    {
-        if (dydis == 0)
-            return true;
-        else
-            return false;
-    }
-
-    void push_back(const T &elementas)
-    {
-        if (dydis == talpa)
-        {
-            resize();
-        }
-        duomenys[dydis] = elementas;
-        ++dydis;
-    }
-
-    void pop_back()
-    {
-        if (dydis > 0)
-        {
-            --dydis;
-        }
-    }
-
-    void swap(Vector &v)
-    {
-        std::swap(duomenys, v.duomenys);
-        std::swap(dydis, v.dydis);
-        std::swap(talpa, v.talpa);
-    }
-
-    void clear()
-    {
-        dydis = 0;
-        talpa = 0;
-        delete[] duomenys;
-        duomenys = nullptr;
-    }
-
-    void assign(size_t kiekis, const T &elementas)
-    {
-        if (kiekis > talpa)
-            resize(kiekis);
-        std::fill_n(duomenys, kiekis, elementas);
-        dydis = kiekis;
-    }
-
-    void assign(T *begin, T *end)
-    {
-        size_t kiekis = std::distance(begin, end);
-        if (kiekis > talpa)
-            resize(kiekis);
-        std::copy(begin, end, duomenys);
-        dydis = kiekis;
-    }
-
-    void assign(std::initializer_list<T> list)
-    {
-        size_t kiekis = list.size();
-        if (kiekis > talpa)
-            resize(kiekis);
-        std::copy(list.begin(), list.end(), duomenys);
-        dydis = kiekis;
-    }
-
-    void resize(size_t naujaTalpa)
-    {
-        talpa = naujaTalpa;
-        T *naujiDuomenys = new T[talpa];
-        for (size_t i = 0; i < dydis; ++i)
-        {
-            naujiDuomenys[i] = duomenys[i];
-        }
-        delete[] duomenys;
-        duomenys = naujiDuomenys;
-    }
-
-    void resize(size_t naujaTalpa, const T &elementas)
-    {
-        talpa = naujaTalpa;
-        T *naujiDuomenys = new T[talpa];
-        for (size_t i = 0; i < dydis; ++i)
-        {
-            naujiDuomenys[i] = duomenys[i];
-        }
-        for (size_t i = dydis; i < talpa; ++i)
-        {
-            naujiDuomenys[i] = elementas;
-        }
-        dydis = talpa;
-        delete[] duomenys;
-        duomenys = naujiDuomenys;
-    }
-
-    void reserve(size_t naujaTalpa)
-    {
-        resize(naujaTalpa);
-    }
-
-    void shrink_to_fit()
-    {
-        if (dydis < talpa)
-            resize(dydis);
-    }
-
-    void erase(T *index)
-    {
-        size_t vieta = index - duomenys;
-        if (index > duomenys + dydis || index < duomenys || vieta < 0)
-        {
-            throw std::out_of_range("Out of range: " + std::to_string(vieta) + " >= this->size: " + std::to_string(this->dydis));
-        }
-        for (size_t i = vieta; i + 1 < dydis; ++i)
-        {
-            duomenys[i] = duomenys[i + 1];
-        }
-        --dydis;
-    }
-
-    void erase(T *begin, T *end)
-    {
-        size_t kiekis = std::distance(begin, end);
-        size_t vieta = begin - duomenys;
-        for (size_t i = vieta; i + kiekis < dydis; ++i)
-        {
-            duomenys[i] = duomenys[i + kiekis];
-        }
-        dydis -= kiekis;
-    }
-
-    void insert(T *index, const T &elementas)
-    {
-        size_t vieta = index - duomenys;
-        if (dydis == talpa)
-            resize();
-        for (size_t i = dydis; i > vieta + 1; i--)
-        {
-            duomenys[i] = duomenys[i - 1];
-        }
-        duomenys[vieta] = elementas;
-        dydis++;
-    }
-
-
-    T &at(size_t index)
-    {
-        if (index >= dydis || index < 0)
-        {
-            throw std::out_of_range("Out of range: " + std::to_string(index) + " >= this->size: " + std::to_string(this->dydis));
-        }
-        return duomenys[index];
-    }
-
-    void append_range(std::initializer_list<T> list)
-    {
-        if (dydis + list.size() > talpa)
-        {
-            reserve(talpa + list.size());
-        }
-        for (auto &elementas : list)
-        {
-            duomenys[dydis++] = elementas;
-        }
-    }
-
-    // operatoriu overloadai
-    T &operator[](size_t index)
-    {
-        if (index >= dydis)
-        {
-            throw std::out_of_range("Index out of bounds");
-        }
-        return duomenys[index];
-    }
-
-    bool operator==(const Vector&v){
-        if(dydis != v.dydis) return false;
-        for(int i=0; i<dydis; i++)
-        {
-            if (duomenys[i]!= v.duomenys[i]) return false;
-        }
-        return true;
-    }
-};*/
-
-
-
-/*
-int main(){
- /* Vector <int> vektorius;
-    vektorius.push_back(2);
-    cout << vektorius[0] << endl;
-
-    Vector<int> vektorius2(vektorius);
-    vektorius2.push_back(4);
-    vektorius2.push_back(4);
-    cout << vektorius2[1] << endl;
-
-    Vector<int> vektorius3 =std::move(vektorius2);
-    vektorius3.pop_back();
-    cout << vektorius3[1]<< endl;
-
-    Vector <int> antras;/*
-    antras.push_back(6);
-    cout << antras[0] << endl;
-    antras.swap(vektorius3);
-    cout << antras[0] << endl;
-
-    antras.clear();
-
-    antras.assign(4, 7);
-    cout << antras[0] << antras[1] << antras[2] << endl;
-
-    antras.clear();
-    antras.assign(vektorius.begin(), vektorius.end());
-    cout << antras[0] << endl;
-    
-    antras.reserve(25);
-    antras.assign({1, 1, 1, 1, 1, 1});
-    antras.shrink_to_fit();
-    antras.push_back(34);
-    antras.push_back(12);
-    cout << antras[7];
-
-    antras.clear();
-    antras.assign({1,2,3,4,5,6,7,8,9});
-    cout << antras[3] << endl;
-    antras.erase(antras.begin(), antras.begin()+3);
-    cout << antras[3] << endl;
-
-    vector <int> vektorius;
-    vektorius.clear();
-    vektorius.assign({1,2,3,4,5,6,7,8,9});
-    cout << vektorius[3] << endl;
-    vektorius.erase(vektorius.begin(), vektorius.begin()+3);
-    cout << vektorius[3] << endl;
-
-    antras.insert(antras.begin(), 5);
-    vektorius.insert(vektorius.begin(), 5);
-    cout << antras[0] << endl;
-    cout << vektorius[0] << endl;
-
-    antras.assign({1,2,3,4,7,8,9});
-    antras.insert_range(antras.begin()+4, {5, 6});
-    for(int i=0; i<antras.size(); i++)
-    {
-        cout << antras[i] << endl;
-    }
-}*/
+TEST_CASE("Palyginimo operatorius", "[comparison]"){
+    Vector <int> v1{1,2,3};
+    Vector <int> v2{1,2,3};
+    Vector <int> v3{4,5,6};
+    REQUIRE(v1==v2);
+    REQUIRE_FALSE(v1==v3);
+}

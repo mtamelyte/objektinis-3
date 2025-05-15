@@ -2,6 +2,9 @@
 
 int main()
 {
+    Vector <int> v{1,2,3};
+    cout << v.size() << endl;
+    cout << v.capacity() << endl;
     srand(time(NULL));
     std::setlocale(LC_ALL, "en_US.UTF-8");
     int meniuPasirinkimas, tipoPasirinkimas;

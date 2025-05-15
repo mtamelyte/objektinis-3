@@ -9,12 +9,10 @@ private:
 
     void resize()
     {
-        if (talpa == 0)
-            talpa = 1;
-        else
-        {
-            talpa *= 2;
-            T *naujiDuomenys = new T[talpa];
+        if (talpa==0) talpa=1;
+        else talpa *= 2;
+        {   
+             T *naujiDuomenys = new T[talpa];
             for (size_t i = 0; i < dydis; ++i)
             {
                 naujiDuomenys[i] = duomenys[i];
@@ -174,10 +172,7 @@ public:
 
     void push_back(const T &elementas)
     {
-        if (dydis == talpa)
-        {
-            resize();
-        }
+        if (dydis == talpa) resize();
         duomenys[dydis] = elementas;
         ++dydis;
     }
@@ -341,7 +336,7 @@ public:
         return duomenys[index];
     }
 
-    bool operator==(const Vector&v){
+    bool operator==(const Vector&v) const{
         if(dydis != v.dydis) return false;
         for(int i=0; i<dydis; i++)
         {
