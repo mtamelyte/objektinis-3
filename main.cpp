@@ -6,7 +6,8 @@ int main()
     srand(time(NULL));
     std::setlocale(LC_ALL, "en_US.UTF-8");
     int meniuPasirinkimas, tipoPasirinkimas;
-    Vector <Stud> studentai;                                            
+    Vector <Stud> studentai;
+    while (true){                                            
     while (true)
     {
         try
@@ -126,6 +127,7 @@ int main()
     {
         return 0;
         break;
+        break;
     }
     default:
     {
@@ -135,4 +137,5 @@ int main()
     }
     break;
     }
+}
 }
