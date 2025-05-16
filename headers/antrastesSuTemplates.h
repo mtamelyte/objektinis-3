@@ -330,13 +330,13 @@ void antraStrategija(Container &studentai, Container &neprotingi)
 template <typename Container>
 void treciaStrategija(Container &studentai, Container &neprotingi)
 {
-    auto it = std::stable_partition(studentai.begin(), studentai.end(), [](Stud &a)
+    auto it = std::stable_partition(studentai.begin(), studentai.end(), [](const Stud &a)
                             { return a.getGalutinisSuVidurkiu() >= 5; });
     neprotingi.assign(it, studentai.end());
-    studentai.resize(std::distance(studentai.begin(), it));
+    studentai.resize(std::distance(studentai.begin(), it));/*
     if constexpr (std::is_same_v<Container, Vector<Stud>>)
     {
         neprotingi.shrink_to_fit();
         studentai.shrink_to_fit();
-    }
+    }*/
 }

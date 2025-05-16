@@ -9,10 +9,12 @@ private:
 
     void resize()
     {
-        if (talpa==0) talpa=1;
-        else talpa *= 2;
-        {   
-             T *naujiDuomenys = new T[talpa];
+        if (talpa == 0)
+            talpa = 1;
+        else
+            talpa *= 2;
+        {
+            T *naujiDuomenys = new T[talpa];
             for (size_t i = 0; i < dydis; ++i)
             {
                 naujiDuomenys[i] = duomenys[i];
@@ -84,7 +86,7 @@ public:
     }
 
     // move assignment operator
-    Vector &operator=(Vector&& v) noexcept
+    Vector &operator=(Vector &&v) noexcept
     {
         if (this != &v)
         {
@@ -172,7 +174,8 @@ public:
 
     void push_back(const T &elementas)
     {
-        if (dydis == talpa) resize();
+        if (dydis == talpa)
+            resize();
         duomenys[dydis] = elementas;
         ++dydis;
     }
@@ -192,9 +195,9 @@ public:
         std::swap(talpa, v.talpa);
     }
 
-    void swap( T& a, T& b )
+    void swap(T &a, T &b)
     {
-        std::swap(a,b);
+        std::swap(a, b);
     }
 
     void clear()
@@ -213,7 +216,8 @@ public:
         dydis = kiekis;
     }
 
-    void assign(T *begin, T *end)
+    template <typename InputIt>
+    void assign(InputIt begin, InputIt end)
     {
         size_t kiekis = std::distance(begin, end);
         if (kiekis > talpa)
@@ -235,12 +239,15 @@ public:
     {
         talpa = naujaTalpa;
         T *naujiDuomenys = new T[talpa];
+        if (naujaTalpa < dydis)
+            dydis = naujaTalpa;
         for (size_t i = 0; i < dydis; ++i)
         {
             naujiDuomenys[i] = duomenys[i];
         }
         delete[] duomenys;
         duomenys = naujiDuomenys;
+        dydis = std::min(dydis, talpa);
     }
 
     void resize(size_t naujaTalpa, const T &elementas)
@@ -309,7 +316,6 @@ public:
         dydis++;
     }
 
-
     T &at(size_t index)
     {
         if (index >= dydis || index < 0)
@@ -319,8 +325,10 @@ public:
         return duomenys[index];
     }
 
-    const T& at(size_t pos) const {
-        if (pos >= dydis) {
+    const T &at(size_t pos) const
+    {
+        if (pos >= dydis)
+        {
             throw std::out_of_range("Out of range: " + std::to_string(pos) + " >= this->size: " + std::to_string(this->dydis));
         }
         return duomenys[pos];
@@ -348,20 +356,26 @@ public:
         return duomenys[index];
     }
 
-    bool operator==(const Vector&v) const{
-        if(dydis != v.dydis) return false;
-        for(int i=0; i<dydis; i++)
+    bool operator==(const Vector &v) const
+    {
+        if (dydis != v.dydis)
+            return false;
+        for (int i = 0; i < dydis; i++)
         {
-            if (duomenys[i]!= v.duomenys[i]) return false;
+            if (duomenys[i] != v.duomenys[i])
+                return false;
         }
         return true;
     }
 
-    bool operator!=(const Vector&v) const{
-        if(dydis != v.dydis) return true;
-        for(int i=0; i<dydis; i++)
+    bool operator!=(const Vector &v) const
+    {
+        if (dydis != v.dydis)
+            return true;
+        for (int i = 0; i < dydis; i++)
         {
-            if (duomenys[i]!= v.duomenys[i]) return true;
+            if (duomenys[i] != v.duomenys[i])
+                return true;
         }
         return false;
     }
