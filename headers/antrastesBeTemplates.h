@@ -1,4 +1,3 @@
-
 #include "klase.h"
 void vardoIvedimas(Stud &laik);
 void pazymiuIvedimas(Stud &laik);

@@ -1,3 +1,4 @@
+
 #include "headers/antrastesSuTemplates.h"
 
 void vardoIvedimas(Stud &laik)

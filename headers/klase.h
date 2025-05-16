@@ -1,4 +1,5 @@
-#include "vektorius.h"
+
+#include "mano_lib.h"
 double vidurkis(vector<int> nd);
 double mediana(vector<int> nd);
 class Zmogus
@@ -45,7 +46,8 @@ public:
     Stud &operator=(const Stud &s);
     Stud(Stud &&s);
     Stud &operator=(Stud &&s);
-    ~Stud()
+    ~Stud(){clear();}
+    void clear()
     {
         nd.clear();
         egzaminas = 0;

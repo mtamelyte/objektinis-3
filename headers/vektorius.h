@@ -84,7 +84,7 @@ public:
     }
 
     // move assignment operator
-    Vector &operator=(const Vector &&v)
+    Vector &operator=(Vector&& v) noexcept
     {
         if (this != &v)
         {
@@ -118,7 +118,7 @@ public:
         if (dydis == 0)
             return duomenys;
         else
-            duomenys + dydis - 1;
+            return duomenys + dydis - 1;
     }
 
     T *rend()
@@ -126,7 +126,7 @@ public:
         if (dydis == 0)
             return duomenys;
         else
-            duomenys - 1;
+            return duomenys - 1;
     }
 
     const T *cbegin() const { return duomenys; }
@@ -190,6 +190,11 @@ public:
         std::swap(duomenys, v.duomenys);
         std::swap(dydis, v.dydis);
         std::swap(talpa, v.talpa);
+    }
+
+    void swap( T& a, T& b )
+    {
+        std::swap(a,b);
     }
 
     void clear()
@@ -296,7 +301,7 @@ public:
         size_t vieta = index - duomenys;
         if (dydis == talpa)
             resize();
-        for (size_t i = dydis; i > vieta + 1; i--)
+        for (size_t i = dydis; i > vieta; i--)
         {
             duomenys[i] = duomenys[i - 1];
         }
@@ -314,11 +319,18 @@ public:
         return duomenys[index];
     }
 
+    const T& at(size_t pos) const {
+        if (pos >= dydis) {
+            throw std::out_of_range("Out of range: " + std::to_string(pos) + " >= this->size: " + std::to_string(this->dydis));
+        }
+        return duomenys[pos];
+    }
+
     void append_range(std::initializer_list<T> list)
     {
         if (dydis + list.size() > talpa)
         {
-            reserve(talpa + list.size());
+            reserve(dydis + list.size());
         }
         for (auto &elementas : list)
         {
@@ -343,5 +355,14 @@ public:
             if (duomenys[i]!= v.duomenys[i]) return false;
         }
         return true;
+    }
+
+    bool operator!=(const Vector&v) const{
+        if(dydis != v.dydis) return true;
+        for(int i=0; i<dydis; i++)
+        {
+            if (duomenys[i]!= v.duomenys[i]) return true;
+        }
+        return false;
     }
 };
