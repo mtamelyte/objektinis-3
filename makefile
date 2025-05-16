@@ -23,4 +23,4 @@ run: main
 	./main.exe
 
 clean: 
-	del *.o *.exe
+	del *.o main.exe testai.exe perskirstymai.exe vektorius.exe
