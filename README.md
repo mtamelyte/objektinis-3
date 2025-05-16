@@ -6,6 +6,12 @@ Programa leidžia įvesti arba sugeneruoti studentų duomenis bei pažymius, aps
 3. Per komandinę eilutę nunaviguoti į relizo direktoriją ir įvesti "make run"
 4. Norint paleisti programos testavimą - vietoj "make run" įvesti "make testai"
 
+ARBA 
+
+1. Parsisiųsti ir unzippinti failus
+2. Paleisti setup.exe ir sekti instaliacijos nurodymus
+3. Tarp kompiuterio programų susirasti "Studentų pažymių programa" ir paleisti
+
 Paleidus programą naudotojui parodomas meniu su 7 pasirinkimais:
 
 1 - Suvesti duomenis ranka : Leidžia suvesti tiek studentų vardus, tiek pažymius ranka
@@ -23,6 +29,13 @@ Paleidus programą naudotojui parodomas meniu su 7 pasirinkimais:
 7 - Baigti darbą: Išjungia programą
 
 # v3.0
+
+Šioje versijoje std::vector yra pakeistas ranka sukurta Vector klase, turinčia didžiąją dalį tų pačių funkcijų, pvz. :
+
+void clear() - ištrina visas vektoriaus reikšmes, duomenų adresą pakeičia į null pointer'į bei dydį ir talpą pakeičia į 0
+void push_back(const T &elementas) - prie vektoriaus galo prideda parametruose nurodytą elementą
+bool empty() - grąžina reikšmę true, jei vektoriaus dydis yra 0, ir reikšmę false, jei vektoriaus dydis nelygus 0
+void pop_back() - sumažina vektoriaus dydį, taip išimdamas jo paskutinį elementą
 
 # Vektorių testavimas
 
