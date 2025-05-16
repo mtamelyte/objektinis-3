@@ -34,4 +34,5 @@ vektorius.exe
 *.out
 *.app
 
+main.exe.manifest
 *.txt
