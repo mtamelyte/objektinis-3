@@ -54,7 +54,7 @@ void ivedimas(Container &studentai, int &meniuPasirinkimas)
 }
 
 template <typename Container>
-void nuskaitymasSuBuferiu(Container &studentai, string failoPavadinimas)
+void nuskaitymasSuBuferiu(Container &studentai, int &tesimoPasirinkimas, string failoPavadinimas)
 {
     Vector<string> laik;
     string eilute;
@@ -75,8 +75,17 @@ void nuskaitymasSuBuferiu(Container &studentai, string failoPavadinimas)
         catch (const char *e)
         {
             cout << e << endl;
-            failoPavadinimas = failoPasirinkimas("Pasirinkite kitą failą: ");
-            continue;
+            cout << "Ar norite pasirinkti kitą failą?" << endl;
+            cout << "1 - taip" << endl;
+            cout << "2 - ne" << endl;
+            cin >> tesimoPasirinkimas;
+            if (tesimoPasirinkimas == 1)
+            {
+                failoPavadinimas = failoPasirinkimas("Pasirinkite kitą failą: ");
+                continue;
+            }
+            else
+                return;
         }
     }
     buferis << fin.rdbuf();
@@ -158,7 +167,7 @@ void rusiavimas(Container &studentai, int pasirinkimas)
 template <typename Container>
 void tyrimas(Container &studentai)
 {
-    int tyrimoPasirinkimas, rusPasirinkimas, kiekioPasirinkimas, galBaloPasirinkimas, skirstymoPasirinkimas;
+    int tyrimoPasirinkimas, rusPasirinkimas, kiekioPasirinkimas, galBaloPasirinkimas, skirstymoPasirinkimas, tesimoPasirinkimas=1;
     string sugeneruotasFailas;
     while (true)
     {
@@ -257,7 +266,7 @@ void tyrimas(Container &studentai)
                 Container neprotingi;
                 studentai.clear();
                 auto t3 = std::chrono::high_resolution_clock::now();
-                nuskaitymasSuBuferiu(studentai, "studentai" + to_string(dydzioPasirinkimas) + ".txt");
+                nuskaitymasSuBuferiu(studentai, tesimoPasirinkimas, "studentai" + to_string(dydzioPasirinkimas) + ".txt");
                 auto t4 = std::chrono::high_resolution_clock::now();
                 cout << "Failo nuskaitymas truko: " << (t4 - t3) / 1.0s << " s." << endl;
                 rusiavimas(studentai, 3);
@@ -331,12 +340,12 @@ template <typename Container>
 void treciaStrategija(Container &studentai, Container &neprotingi)
 {
     auto it = std::stable_partition(studentai.begin(), studentai.end(), [](const Stud &a)
-                            { return a.getGalutinisSuVidurkiu() >= 5; });
+                                    { return a.getGalutinisSuVidurkiu() >= 5; });
     neprotingi.assign(it, studentai.end());
-    studentai.resize(std::distance(studentai.begin(), it));/*
-    if constexpr (std::is_same_v<Container, Vector<Stud>>)
-    {
-        neprotingi.shrink_to_fit();
-        studentai.shrink_to_fit();
-    }*/
+    studentai.resize(std::distance(studentai.begin(), it)); /*
+     if constexpr (std::is_same_v<Container, Vector<Stud>>)
+     {
+         neprotingi.shrink_to_fit();
+         studentai.shrink_to_fit();
+     }*/
 }

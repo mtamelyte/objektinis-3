@@ -205,12 +205,13 @@ bool pagalMediana(Stud &a, Stud &b)
 
 void testas(string failoPavadinimas)
 {
+    int tesimoPasirinkimas=1;
     Vector<Stud> studentai;
     double vidurkis;
     for (int i = 0; i < 3; i++)
     {
         auto t1 = std::chrono::high_resolution_clock::now();
-        nuskaitymasSuBuferiu(studentai, failoPavadinimas);
+        nuskaitymasSuBuferiu(studentai, tesimoPasirinkimas, failoPavadinimas);
         ofstream fout("rez.txt");
         isvedimas(studentai, 1, fout);
         fout.close();

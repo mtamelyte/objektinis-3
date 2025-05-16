@@ -36,6 +36,7 @@ void clear() - ištrina visas vektoriaus reikšmes, duomenų adresą pakeičia �
 void push_back(const T &elementas) - prie vektoriaus galo prideda parametruose nurodytą elementą
 bool empty() - grąžina reikšmę true, jei vektoriaus dydis yra 0, ir reikšmę false, jei vektoriaus dydis nelygus 0
 void pop_back() - sumažina vektoriaus dydį, taip išimdamas jo paskutinį elementą
+void shrink_to_fit() - sumažina vektoriaus talpą iki jo dydžio, kad neliktų rezervuotos ir neišnaudotos vietos
 
 # Vektorių testavimas
 
