@@ -33,9 +33,13 @@ Paleidus programą naudotojui parodomas meniu su 7 pasirinkimais:
 Šioje versijoje std::vector yra pakeistas ranka sukurta Vector klase, turinčia didžiąją dalį tų pačių funkcijų, pvz. :
 
 void clear() - ištrina visas vektoriaus reikšmes, duomenų adresą pakeičia į null pointer'į bei dydį ir talpą pakeičia į 0
+
 void push_back(const T &elementas) - prie vektoriaus galo prideda parametruose nurodytą elementą
+
 bool empty() - grąžina reikšmę true, jei vektoriaus dydis yra 0, ir reikšmę false, jei vektoriaus dydis nelygus 0
+
 void pop_back() - sumažina vektoriaus dydį, taip išimdamas jo paskutinį elementą
+
 void shrink_to_fit() - sumažina vektoriaus talpą iki jo dydžio, kad neliktų rezervuotos ir neišnaudotos vietos
 
 # Vektorių testavimas
