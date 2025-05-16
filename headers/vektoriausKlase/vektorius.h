@@ -1,4 +1,4 @@
-#include "mano_lib.h"
+#include "../mano_lib.h"
 template <typename T>
 class Vector
 {

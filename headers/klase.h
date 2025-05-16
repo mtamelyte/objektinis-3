@@ -1,5 +1,5 @@
 
-#include "vektorius.h"
+#include "vektoriausKlase/vektorius.h"
 double vidurkis(Vector<int> nd);
 double mediana(Vector<int> nd);
 class Zmogus
