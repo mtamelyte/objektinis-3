@@ -1,7 +1,7 @@
 
-#include "mano_lib.h"
-double vidurkis(vector<int> nd);
-double mediana(vector<int> nd);
+#include "vektorius.h"
+double vidurkis(Vector<int> nd);
+double mediana(Vector<int> nd);
 class Zmogus
 {
 protected:
@@ -34,13 +34,13 @@ class Stud : public Zmogus
 {
 private:
     double egzaminas;
-    vector<int> nd;
+    Vector<int> nd;
     double galutinisSuVidurkiu;
     double galutinisSuMediana;
 
 public:
     Stud() : Zmogus("", ""), egzaminas(0), nd{}, galutinisSuVidurkiu(0), galutinisSuMediana(0) {}                                                                                                                                                       // konstruktorius
-    Stud(const string &var, const string &pav, const int &egz, const vector<int> &nd_) : Zmogus(var, pav), egzaminas(egz), nd{nd_}, galutinisSuVidurkiu((vidurkis(nd_) * 0.4) + (egz * 0.6)), galutinisSuMediana((mediana(nd_) * 0.4) + (egz * 0.6)) {} // konstruktorius su inputu
+    Stud(const string &var, const string &pav, const int &egz, const Vector<int> &nd_) : Zmogus(var, pav), egzaminas(egz), nd{nd_}, galutinisSuVidurkiu((vidurkis(nd_) * 0.4) + (egz * 0.6)), galutinisSuMediana((mediana(nd_) * 0.4) + (egz * 0.6)) {} // konstruktorius su inputu
     Stud(const string &var, const string &pav, const int &egz) : Zmogus(var, pav), egzaminas(egz), nd{}, galutinisSuVidurkiu((egz * 0.6)), galutinisSuMediana((egz * 0.6)) {}                                                                           // konstruktorius su inputu
     Stud(const Stud &s);
     Stud &operator=(const Stud &s);
@@ -58,13 +58,13 @@ public:
     friend ostream &operator<<(ostream &os, Stud &s);
     // setteriai
     void setEgzaminas(const double &egz) { egzaminas = egz; };
-    void setND(const vector<int> &nd_) { nd = nd_; };
+    void setND(const Vector<int> &nd_) { nd = nd_; };
     void setPazymys(const int &paz) { nd.push_back(paz); };
     void setGalutinisSuVidurkiu(const double &vid) { galutinisSuVidurkiu = vid; };
     void setGalutinisSuMediana(const double &med) { galutinisSuMediana = med; };
     // getteriai
     const double getEgzaminas() const { return egzaminas; };
-    vector<int> getND() const { return nd; };
+    Vector<int> getND() const { return nd; };
     int getPazymys(int &i) const { return nd.at(i); };
     double getGalutinisSuVidurkiu() const { return galutinisSuVidurkiu; };
     double getGalutinisSuMediana() const { return galutinisSuMediana; };

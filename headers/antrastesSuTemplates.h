@@ -56,7 +56,7 @@ void ivedimas(Container &studentai, int &meniuPasirinkimas)
 template <typename Container>
 void nuskaitymasSuBuferiu(Container &studentai, string failoPavadinimas)
 {
-    vector<string> laik;
+    Vector<string> laik;
     string eilute;
     stringstream buferis;
     ifstream fin;
@@ -305,7 +305,7 @@ void pirmaStrategija(Container &studentai, Container &protingi, Container &nepro
                 neprotingi.push_back(s);
         }
     }
-    if constexpr (std::is_same_v<Container, vector<Stud>>)
+    if constexpr (std::is_same_v<Container, Vector<Stud>>)
     {
         protingi.shrink_to_fit();
         neprotingi.shrink_to_fit();
@@ -320,7 +320,7 @@ void antraStrategija(Container &studentai, Container &neprotingi)
         neprotingi.push_back(studentai.back());
         studentai.pop_back();
     }
-    if constexpr (std::is_same_v<Container, vector<Stud>>)
+    if constexpr (std::is_same_v<Container, Vector<Stud>>)
     {
         neprotingi.shrink_to_fit();
         studentai.shrink_to_fit();
@@ -330,11 +330,11 @@ void antraStrategija(Container &studentai, Container &neprotingi)
 template <typename Container>
 void treciaStrategija(Container &studentai, Container &neprotingi)
 {
-    auto it = stable_partition(studentai.begin(), studentai.end(), [](Stud &a)
+    auto it = std::stable_partition(studentai.begin(), studentai.end(), [](Stud &a)
                             { return a.getGalutinisSuVidurkiu() >= 5; });
     neprotingi.assign(it, studentai.end());
     studentai.resize(std::distance(studentai.begin(), it));
-    if constexpr (std::is_same_v<Container, vector<Stud>>)
+    if constexpr (std::is_same_v<Container, Vector<Stud>>)
     {
         neprotingi.shrink_to_fit();
         studentai.shrink_to_fit();

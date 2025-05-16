@@ -26,12 +26,20 @@ Paleidus programą naudotojui parodomas meniu su 7 pasirinkimais:
 
 # Vektorių testavimas
 
-|             | Greitis su 10 000  | Greitis su 100 000 | Greitis su 1 000 000 | Greitis su 10 000 000 | Greitis su 100 000 000 | 
-|             |--------------------|--------------------|----------------------|-----------------------|------------------------|
+| Konteineris | Greitis su 10 000  | Greitis su 100 000 | Greitis su 1 000 000 | Greitis su 10 000 000 | Greitis su 100 000 000 | 
+|-------------|--------------------|--------------------|----------------------|-----------------------|------------------------|
 | std::vector | 0.0001235 s        | 0.0007838 s        | 0.0048987 s          | 0.0530586 s           | 0.651127 s             |
 | Vector      | 0 s                | 0.0006101 s        | 0.0033752 s          | 0.0575333 s           | 0.606152 s             |
 
 Su 100 000 000 studentų įvyksta 28 perskirstymai tiek su std::vector, tiek su Vector klase.
+
+# Spartos testas
+
+| Studentų kiekis | std::vector greitis | Vector klasės greitis |
+|-----------------|---------------------|-----------------------|
+| 100 000         | 1.5479 s            | 1.03405 s             |
+| 1 000 000       | 13.389 s            | 7.75306 s.
+| 10 000 000      |                     | 61.8106 s.
 
 # v2.0
 

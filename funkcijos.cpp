@@ -168,7 +168,7 @@ void vardoGeneravimas(Stud &laik)
     else
     {
         laik.setVardas(motVardas[numeris(mt)]);
-         laik.setPavarde(motPavarde[numeris(mt)]);
+        laik.setPavarde(motPavarde[numeris(mt)]);
     }
 }
 
@@ -205,7 +205,7 @@ bool pagalMediana(Stud &a, Stud &b)
 
 void testas(string failoPavadinimas)
 {
-    vector<Stud> studentai;
+    Vector<Stud> studentai;
     double vidurkis;
     for (int i = 0; i < 3; i++)
     {
@@ -258,8 +258,8 @@ string failoPasirinkimas(string klausimas)
 {
     system("dir /b *.txt > temp.txt");
     ifstream fin("temp.txt");
-    vector<string> failuPavadinimai;
-    vector<string> nenorimiFailai = {"rez.txt", "temp.txt"};
+    Vector<string> failuPavadinimai;
+    Vector<string> nenorimiFailai = {"rez.txt", "temp.txt"};
     string pavadinimas;
     int failoNumeris;
     while (!fin.eof())
@@ -367,7 +367,7 @@ int galutinioBaloPasirinkimas()
     return pasirinkimas;
 }
 
-double vidurkis(vector <int> nd)
+double vidurkis(Vector <int> nd)
 {
     if (nd.size()==0) return 0;
     double suma = 0;
@@ -378,7 +378,7 @@ double vidurkis(vector <int> nd)
     return suma / nd.size();
 }
 
-double mediana(vector <int> nd)
+double mediana(Vector <int> nd)
 {
     if(nd.size()==0) return 0;
     int dydis;
